@@ -1,0 +1,342 @@
+@layer reset, base, components, effects;
+
+/* ---------------- RESET ---------------- */
+
+@layer reset {
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+}
+
+
+/* ---------------- BASE ---------------- */
+
+@layer base {
+
+:root {
+
+    --bg: oklch(12% 0.04 260);
+    --surface: oklch(18% 0.05 260);
+    --primary: oklch(70% 0.15 160);
+    --primary-soft: color-mix(in oklch, var(--primary), white 30%);
+    --text: oklch(92% 0.02 260);
+    --muted: oklch(65% 0.02 260);
+
+    --radius: 1.2rem;
+
+}
+
+body {
+
+    font-family: system-ui, sans-serif;
+
+    background:
+        radial-gradient(circle at 20% 30%, oklch(25% 0.1 200), transparent),
+        radial-gradient(circle at 80% 70%, oklch(25% 0.1 140), transparent),
+        var(--bg);
+
+    color: var(--text);
+
+    min-height: 100vh;
+
+}
+
+h1 {
+
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+
+}
+
+h2 {
+
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+
+}
+
+p {
+
+    color: var(--muted);
+    max-width: 60ch;
+
+}
+
+}
+
+
+/* ---------------- HEADER ---------------- */
+
+@layer components {
+
+.site-header {
+
+    position: sticky;
+    top: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem 2rem;
+
+    backdrop-filter: blur(12px);
+
+    background: color-mix(in oklch, var(--bg), transparent 30%);
+
+}
+
+.logo {
+
+    display: flex;
+    gap: .6rem;
+    align-items: center;
+
+    font-weight: 600;
+
+}
+
+.icon {
+
+    width: 24px;
+}
+
+nav a {
+
+    margin-left: 1rem;
+    text-decoration: none;
+    color: var(--muted);
+
+}
+
+nav a:hover {
+
+    color: var(--primary);
+
+}
+
+
+/* ---------------- HERO ---------------- */
+
+.hero {
+
+    min-height: 70vh;
+
+    display: grid;
+    place-content: center;
+
+    text-align: center;
+
+    padding: 2rem;
+
+}
+
+
+/* ---------------- PANELS ---------------- */
+
+.panel {
+
+    padding: 4rem 2rem;
+
+    display: grid;
+    gap: 1.5rem;
+
+}
+
+.panel.alt {
+
+    background: var(--surface);
+
+}
+
+
+/* ---------------- BUTTON ---------------- */
+
+.primary-button {
+
+    display: inline-block;
+
+    padding: .8rem 1.4rem;
+
+    border-radius: var(--radius);
+
+    background: var(--primary);
+
+    color: black;
+
+    text-decoration: none;
+
+    border: none;
+
+    cursor: pointer;
+
+}
+
+.primary-button:hover {
+
+    background: var(--primary-soft);
+
+}
+
+
+/* ---------------- FEATURES ---------------- */
+
+.feature-grid {
+
+    display: grid;
+    gap: 1rem;
+
+    container-type: inline-size;
+
+}
+
+.feature {
+
+    padding: 1.5rem;
+
+    background: var(--surface);
+
+    border-radius: var(--radius);
+
+}
+
+
+/* Container Query */
+
+@container (min-width: 600px) {
+
+.feature-grid {
+
+    grid-template-columns: repeat(3, 1fr);
+
+}
+
+}
+
+
+/* ---------------- NODES ---------------- */
+
+.nodes {
+
+    display: flex;
+    gap: 2rem;
+
+    flex-wrap: wrap;
+
+}
+
+.node {
+
+    display: grid;
+    place-items: center;
+
+    gap: .5rem;
+
+}
+
+.dot {
+
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+
+    animation: pulse 4s infinite;
+
+}
+
+
+/* ---------------- FORM ---------------- */
+
+.grow-form {
+
+    display: grid;
+    gap: 1rem;
+
+    max-width: 400px;
+
+}
+
+input {
+
+    width: 100%;
+    padding: .5rem;
+
+    accent-color: var(--primary);
+
+}
+
+
+/* ---------------- FOOTER ---------------- */
+
+footer {
+
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+
+}
+
+}
+
+
+/* ---------------- EFFECTS ---------------- */
+
+@layer effects {
+
+@keyframes pulse {
+
+    0%, 100% {
+        transform: scale(1);
+        opacity: .6;
+    }
+
+    50% {
+        transform: scale(1.6);
+        opacity: 1;
+    }
+
+}
+
+
+/* scroll animation */
+
+.hero {
+
+    animation: fade linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 40%;
+
+}
+
+@keyframes fade {
+
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* modern relational selector */
+
+.feature:has(:hover) {
+
+    outline: 1px solid var(--primary);
+
+}
+
+}
